@@ -1,0 +1,27 @@
+---
+service: myspike
+
+plugins:
+  - serverless-localstack
+
+custom:
+  localstack:
+    debug: true
+    stages:
+      - local
+      - dev
+    endpointFile: localstack_endpoints.json
+    host: http://localhost
+    edgePort: 4566
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  api:
+    handler: api.root
+    events:
+      - http:
+          path: account
+          method: post
